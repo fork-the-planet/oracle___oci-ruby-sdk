@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 require 'net/http'
@@ -21,23 +21,48 @@ module OCI
       # This signer is self-sufficient in that its internals know how to source the required information to request and
       #   use the token:
       #
-      #   * Using the metadata endpoint for the instance (http://169.254.169.254/opc/v1) we can discover the region the
+      #   * Using the metadata endpoint for the instance (http://169.254.169.254/opc/v2) we can discover the region the
       #     instance is in, its leaf certificate and any intermediate certificates (for requesting the token) and the
       #     tenancy (as) that is in the leaf certificate.
       #   * The signer leverages {OCI::Auth::FederationClient} so it can refresh the security token and also get the
       #     private key needed to sign requests (via the client's session_key_supplier)
       class InstancePrincipalsSecurityTokenSigner < OCI::Auth::Signers::X509FederationClientBasedSecurityTokenSigner
         # The region the instance is in, as returned from the metadata endpoint for the instance
-        #   (http://169.254.169.254/opc/v1/instance/region)
+        #   (http://169.254.169.254/opc/v2/instance/region)
         # @return [String] The region for the instance
         attr_reader :region
 
         METADATA_URL_BASE = 'http://169.254.169.254/opc/v2'.freeze
-        GET_REGION_URL = "#{METADATA_URL_BASE}/instance/region".freeze
-        GET_REGION_INFO_URL = "#{METADATA_URL_BASE}/instance/regionInfo/".freeze
-        LEAF_CERTIFICATE_URL = "#{METADATA_URL_BASE}/identity/cert.pem".freeze
-        LEAF_CERTIFICATE_PRIVATE_KEY_URL = "#{METADATA_URL_BASE}/identity/key.pem".freeze
-        INTERMEDIATE_CERTIFICATE_URL = "#{METADATA_URL_BASE}/identity/intermediate.pem".freeze
+        # Set OCI_METADATA_BASE_URL to override the default IMDS base URL used for instance metadata endpoints.
+        OCI_METADATA_BASE_URL_ENV_VAR = 'OCI_METADATA_BASE_URL'.freeze
+
+        def self.metadata_url_base
+          configured_base_url = ENV[OCI_METADATA_BASE_URL_ENV_VAR]
+          return METADATA_URL_BASE if configured_base_url.nil? || configured_base_url.strip.empty?
+
+          # Remove trailing slashes so appending endpoint paths does not create double slashes.
+          configured_base_url.sub(/\/+$/, '')
+        end
+
+        def self.region_url
+          "#{metadata_url_base}/instance/region"
+        end
+
+        def self.region_info_url
+          "#{metadata_url_base}/instance/regionInfo/"
+        end
+
+        def self.leaf_certificate_url
+          "#{metadata_url_base}/identity/cert.pem"
+        end
+
+        def self.leaf_certificate_private_key_url
+          "#{metadata_url_base}/identity/key.pem"
+        end
+
+        def self.intermediate_certificate_url
+          "#{metadata_url_base}/identity/intermediate.pem"
+        end
 
         # Creates a new InstancePrincipalsSecurityTokenSigner
         #
@@ -65,20 +90,20 @@ module OCI
         )
 
           @leaf_certificate_retriever = OCI::Auth::UrlBasedCertificateRetriever.new(
-            LEAF_CERTIFICATE_URL, private_key_url: LEAF_CERTIFICATE_PRIVATE_KEY_URL
+            self.class.leaf_certificate_url, private_key_url: self.class.leaf_certificate_private_key_url
           )
           @intermediate_certificate_retriever = OCI::Auth::UrlBasedCertificateRetriever.new(
-            INTERMEDIATE_CERTIFICATE_URL
+            self.class.intermediate_certificate_url
           )
           @session_key_supplier = OCI::Auth::SessionKeySupplier.new
           @tenancy_id = OCI::Auth::Util.get_tenancy_id_from_certificate(
             @leaf_certificate_retriever.certificate
           )
 
-          uri = URI(GET_REGION_URL)
+          uri = URI(self.class.region_url)
           raw_region_client = Net::HTTP.new(uri.hostname, uri.port)
           raw_region = nil
-          raw_region_client.request(OCI::Auth::Util.get_metadata_request(GET_REGION_URL, 'get')) do |response|
+          raw_region_client.request(OCI::Auth::Util.get_metadata_request(self.class.region_url, 'get')) do |response|
             raw_region = response.body.strip.downcase
           end
           symbolised_raw_region = raw_region.to_sym

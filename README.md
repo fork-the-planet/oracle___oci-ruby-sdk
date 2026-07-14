@@ -4,7 +4,7 @@ This is Oracle Cloud Infrastructure SDK for Ruby. This project is open source an
 
 This project is no longer being actively developed by Oracle. We will continue to address security vulnerabilities for the foreseeable future, and will respond to questions on github, but have no plans to introduce any new functionality, and may not be able to address any non-security related issues. We encourage developers to migrate to other OCI SDKs, and developers may fork this project and enhance it as they desire.
 
-**Version 2.22.0**
+**Version 2.23.0**
 
 This topic describes how to install, configure, and use the Oracle Cloud Infrastructure Ruby SDK.
 
@@ -16,11 +16,12 @@ The Ruby SDK supports the following services:
 * Account Management
 * Analytics Cloud 
 * Announcements
-* AI Anomaly Detection service
 * AI Language service
+* AI Data Platform service
 * AI Speech service
 * AI Vision
 * API Gateway
+* API Platform service
 * Application Dependency Management
 * Application Management service
 * Application Performance Monitoring
@@ -28,6 +29,7 @@ The Ruby SDK supports the following services:
 * Autonomous recovery
 * Autoscaling (Compute)
 * Bastion service
+* Batch service
 * Big Data
 * Blockchain Platform
 * Budgets
@@ -43,19 +45,23 @@ The Ruby SDK supports the following services:
 * Compute Instance Agent
 * Compute Autoscaling
 * Connector Hub
+* Container Registry service
 * Console Dashboard service
 * Container Engine
 * Content and Experience
 * Core Services (which includes Networking, Compute, and Block Volume)
+* Cost Anomaly Detection service
 * Data Catalog
 * Data Flow
 * Data Labeling service
 * Database Migration
+* Database MultiCloud service
 * Database Tools service
+* Database Tools Runtime service
 * Data Integration
+* Data Intelligence Foundation service
 * Data Science
 * Data Safe
-* Data Transfer 
 * Database
 * Database Lifecycle Management service
 * Database Management
@@ -76,12 +82,15 @@ The Ruby SDK supports the following services:
 * Functions
 * Fusion Apps as a Service
 * Generative AI Agent service
+* Generative AI Agent Runtime service
 * Generative AI service 
+* Generative AI Data service
 * Generative AI Inference service
 * Generic Artifacts service
 * Globally Distributed Database service
 * Golden Gate
 * Governance Rules service
+* Guarded Data Pipelines (GDP) service
 * Health Checks
 * Identity and Access Management
 * Identity Domains
@@ -92,6 +101,7 @@ The Ruby SDK supports the following services:
 * Key Management
 * License Manager
 * Limits
+* Limits Increase service
 * Load Balancing
 * Logging
 * Logging Analytics
@@ -114,7 +124,9 @@ The Ruby SDK supports the following services:
 * Notification
 * OCI Control Center
 * OCI Control Center service
+* OCI Internet of Things (OCI IoT) service
 * OCI Registry
+* OCI Streaming with Apache Kafka (OCI Managed Kafka) service
 * OCI Secure Desktops service
 * OneSubscription service
 * Operations Insights
@@ -122,23 +134,28 @@ The Ruby SDK supports the following services:
 * Organizations
 * OS Management Hub
 * Oracle Content and Experience
+* Oracle Data Infrastructure Cloud@Customer service
+* Oracle MultiCloud service
+* Oracle Multicloud Hub service
 * Oracle Roving Edge Infrastructure
 * Object Storage
 * Operator Access Control service
+* Privileged API Access Control service
 * Oracle NoSQL Database Cloud
-* OS Management
 * Process Automation
+* Private Service Access (PSA) service
 * PostgreSQL service
 * Queue Service
 * Quotas
 * Resource Manager
+* Resource Analytics service
 * Resource Scheduler service
 * Search
 * Service Catalog service
+* Service Enablement Lifecycle Framework (SELF) service
 * Secret Management (for the Vault service)
 * Secure Desktops service
 * Security Attribute service
-* Service Mesh
 * Service Connector Hub
 * Source Code Management service
 * Stack Monitoring
@@ -150,6 +167,7 @@ The Ruby SDK supports the following services:
 * VMWare Solution
 * Vulnerability Scanning
 * Web Application Acceleration and Security
+* WebLogic Management service
 * Work Requests
 * Zero Trust Packet Routing service
 
@@ -761,7 +779,7 @@ Please consult the [security guide](./SECURITY.md) for our responsible security 
 
 ## License
 
-Copyright (c) 2016, 2023 Oracle and/or its affiliates.  All rights reserved.
+Copyright (c) 2016, 2026 Oracle and/or its affiliates.  All rights reserved.
 
 This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl
 or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.

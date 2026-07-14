@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl
 # or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.version     = OCI::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Oracle"]
-  s.email       = ["joe.levy@oracle.com"]
+  s.email       = ["kalpana.ramasamy@oracle.com"]
   s.homepage    = "https://docs.cloud.oracle.com/tools/ruby/latest/frames.html"
   s.summary     = "Oracle Cloud Infrastructure Ruby SDK"
   s.description = <<~DESC
@@ -22,15 +22,16 @@ Gem::Specification.new do |s|
 
   s.licenses     = ["UPL-1.0", "Apache-2.0"]
 
-  s.required_ruby_version = '>= 2.2.0'
+  s.required_ruby_version = '>= 2.5.0'
 
   s.add_runtime_dependency 'json', '>= 1.4.6', '< 3.0.0'
   s.add_runtime_dependency 'inifile', '~> 3.0', '>= 3.0.0'
-  s.add_runtime_dependency 'jwt', '~> 2.1'
+  s.add_runtime_dependency 'jwt', '= 3.2.0'
   s.add_runtime_dependency 'psych',  "~> 5.0", ">= 5.0.1"
   s.add_runtime_dependency 'event_stream_parser', '~> 1.0.0'
   s.add_runtime_dependency 'circuitbox', '~> 2.0.0'
   s.add_development_dependency 'webmock', '~> 3.5', '>=3.5.1'
+  s.add_development_dependency 'bigdecimal', '= 4.1.1'
   s.add_development_dependency 'vcr', '~> 4.0'
   s.add_development_dependency 'yard', '~> 0.9.36'
   s.add_development_dependency 'os', '~> 1.0'
@@ -41,6 +42,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'activesupport', '~> 5.2.2'
   s.add_development_dependency 'rspec_junit_formatter', '~> 0.3.0'
   s.add_development_dependency 'test-unit', '~> 3.5.3'
+  s.add_development_dependency 'rake'
   s.executables   = nil
   s.require_paths = ["lib"]
   s.files         = Dir["./lib/**/*.rb", "README.md", "LICENSE.txt", "NOTICE.txt"]

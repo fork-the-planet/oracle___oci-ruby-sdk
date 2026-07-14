@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 module OCI
@@ -47,6 +47,12 @@ module OCI
       REGION_SA_VALPARAISO_1 = 'sa-valparaiso-1'.freeze,
       REGION_AP_SINGAPORE_2 = 'ap-singapore-2'.freeze,
       REGION_ME_RIYADH_1 = 'me-riyadh-1'.freeze,
+      REGION_AP_DELHI_1 = 'ap-delhi-1'.freeze,
+      REGION_AP_BATAM_1 = 'ap-batam-1'.freeze,
+      REGION_EU_MADRID_3 = 'eu-madrid-3'.freeze,
+      REGION_EU_TURIN_1 = 'eu-turin-1'.freeze,
+      REGION_AP_KULAI_2 = 'ap-kulai-2'.freeze,
+      REGION_AF_CASABLANCA_1 = 'af-casablanca-1'.freeze,
       REGION_US_LANGLEY_1 = 'us-langley-1'.freeze,
       REGION_US_LUKE_1 = 'us-luke-1'.freeze,
       REGION_US_GOV_ASHBURN_1 = 'us-gov-ashburn-1'.freeze,
@@ -57,6 +63,7 @@ module OCI
       REGION_AP_CHIYODA_1 = 'ap-chiyoda-1'.freeze,
       REGION_AP_IBARAKI_1 = 'ap-ibaraki-1'.freeze,
       REGION_ME_DCC_MUSCAT_1 = 'me-dcc-muscat-1'.freeze,
+      REGION_ME_IBRI_1 = 'me-ibri-1'.freeze,
       REGION_AP_DCC_CANBERRA_1 = 'ap-dcc-canberra-1'.freeze,
       REGION_EU_DCC_MILAN_1 = 'eu-dcc-milan-1'.freeze,
       REGION_EU_DCC_MILAN_2 = 'eu-dcc-milan-2'.freeze,
@@ -69,6 +76,7 @@ module OCI
       REGION_EU_FRANKFURT_2 = 'eu-frankfurt-2'.freeze,
       REGION_EU_JOVANOVAC_1 = 'eu-jovanovac-1'.freeze,
       REGION_ME_DCC_DOHA_1 = 'me-dcc-doha-1'.freeze,
+      REGION_ME_ALRAYYAN_1 = 'me-alrayyan-1'.freeze,
       REGION_US_SOMERSET_1 = 'us-somerset-1'.freeze,
       REGION_US_THAMES_1 = 'us-thames-1'.freeze,
       REGION_EU_DCC_ZURICH_1 = 'eu-dcc-zurich-1'.freeze,
@@ -79,7 +87,11 @@ module OCI
       REGION_ME_ABUDHABI_4 = 'me-abudhabi-4'.freeze,
       REGION_AP_SEOUL_2 = 'ap-seoul-2'.freeze,
       REGION_AP_SUWON_1 = 'ap-suwon-1'.freeze,
-      REGION_AP_CHUNCHEON_2 = 'ap-chuncheon-2'.freeze
+      REGION_AP_CHUNCHEON_2 = 'ap-chuncheon-2'.freeze,
+      REGION_US_ASHBURN_2 = 'us-ashburn-2'.freeze,
+      REGION_US_NEWARK_1 = 'us-newark-1'.freeze,
+      REGION_EU_BUDAPEST_1 = 'eu-budapest-1'.freeze,
+      REGION_SA_RIODEJANEIRO_1 = 'sa-riodejaneiro-1'.freeze
     ]
 
     REGION_SHORT_NAMES_TO_LONG_NAMES = {
@@ -123,6 +135,12 @@ module OCI
       'vap': REGION_SA_VALPARAISO_1,
       'xsp': REGION_AP_SINGAPORE_2,
       'ruh': REGION_ME_RIYADH_1,
+      'onm': REGION_AP_DELHI_1,
+      'hsg': REGION_AP_BATAM_1,
+      'orf': REGION_EU_MADRID_3,
+      'nrq': REGION_EU_TURIN_1,
+      'jbp': REGION_AP_KULAI_2,
+      'lej': REGION_AF_CASABLANCA_1,
       'lfi': REGION_US_LANGLEY_1,
       'luf': REGION_US_LUKE_1,
       'ric': REGION_US_GOV_ASHBURN_1,
@@ -133,6 +151,7 @@ module OCI
       'nja': REGION_AP_CHIYODA_1,
       'ukb': REGION_AP_IBARAKI_1,
       'mct': REGION_ME_DCC_MUSCAT_1,
+      'ibr': REGION_ME_IBRI_1,
       'wga': REGION_AP_DCC_CANBERRA_1,
       'bgy': REGION_EU_DCC_MILAN_1,
       'mxp': REGION_EU_DCC_MILAN_2,
@@ -145,6 +164,7 @@ module OCI
       'str': REGION_EU_FRANKFURT_2,
       'beg': REGION_EU_JOVANOVAC_1,
       'doh': REGION_ME_DCC_DOHA_1,
+      'vve': REGION_ME_ALRAYYAN_1,
       'ebb': REGION_US_SOMERSET_1,
       'ebl': REGION_US_THAMES_1,
       'avz': REGION_EU_DCC_ZURICH_1,
@@ -155,7 +175,11 @@ module OCI
       'shj': REGION_ME_ABUDHABI_4,
       'dtz': REGION_AP_SEOUL_2,
       'dln': REGION_AP_SUWON_1,
-      'bno': REGION_AP_CHUNCHEON_2
+      'bno': REGION_AP_CHUNCHEON_2,
+      'yxj': REGION_US_ASHBURN_2,
+      'pgc': REGION_US_NEWARK_1,
+      'jsk': REGION_EU_BUDAPEST_1,
+      'hnw': REGION_SA_RIODEJANEIRO_1
     }
 
     # --- Start of region realm mapping ---
@@ -200,6 +224,12 @@ module OCI
       'sa-valparaiso-1': 'oc1'.freeze,
       'ap-singapore-2': 'oc1'.freeze,
       'me-riyadh-1': 'oc1'.freeze,
+      'ap-delhi-1': 'oc1'.freeze,
+      'ap-batam-1': 'oc1'.freeze,
+      'eu-madrid-3': 'oc1'.freeze,
+      'eu-turin-1': 'oc1'.freeze,
+      'ap-kulai-2': 'oc1'.freeze,
+      'af-casablanca-1': 'oc1'.freeze,
 
       'us-langley-1': 'oc2'.freeze,
       'us-luke-1': 'oc2'.freeze,
@@ -215,6 +245,7 @@ module OCI
       'ap-ibaraki-1': 'oc8'.freeze,
 
       'me-dcc-muscat-1': 'oc9'.freeze,
+      'me-ibri-1': 'oc9'.freeze,
 
       'ap-dcc-canberra-1': 'oc10'.freeze,
 
@@ -233,6 +264,7 @@ module OCI
       'eu-jovanovac-1': 'oc20'.freeze,
 
       'me-dcc-doha-1': 'oc21'.freeze,
+      'me-alrayyan-1': 'oc21'.freeze,
 
       'us-somerset-1': 'oc23'.freeze,
       'us-thames-1': 'oc23'.freeze,
@@ -248,7 +280,14 @@ module OCI
 
       'ap-seoul-2': 'oc35'.freeze,
       'ap-suwon-1': 'oc35'.freeze,
-      'ap-chuncheon-2': 'oc35'.freeze
+      'ap-chuncheon-2': 'oc35'.freeze,
+
+      'us-ashburn-2': 'oc42'.freeze,
+      'us-newark-1': 'oc42'.freeze,
+
+      'eu-budapest-1': 'oc51'.freeze,
+
+      'sa-riodejaneiro-1': 'oc52'.freeze
     }
     # ---  end of region realm mapping  ---
 
@@ -270,7 +309,10 @@ module OCI
       'oc24': 'oraclecloud24.com'.freeze,
       'oc26': 'oraclecloud26.com'.freeze,
       'oc29': 'oraclecloud29.com'.freeze,
-      'oc35': 'oraclecloud35.com'.freeze
+      'oc35': 'oraclecloud35.com'.freeze,
+      'oc42': 'oraclecloud42.com'.freeze,
+      'oc51': 'oraclecloud51.com'.freeze,
+      'oc52': 'oraclecloud52.com'.freeze
     }
     # ---  end of realm domain mapping  ---
   end
