@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 require 'oci/base_signer'
@@ -31,7 +31,7 @@ module OCI
           @instance_principal_signer = OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner.new
           @session_key_supplier = OCI::Auth::SessionKeySupplier.new
           @region = @instance_principal_signer.region
-          metadata_url_base = OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner::METADATA_URL_BASE
+          metadata_url_base = OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner.metadata_url_base
           @rp_token_path_provider = rp_token_path_provider || OCI::Auth::Signers::RptPathProvider::DefaultRptPathProvider.new(metadata_url: metadata_url_base)
 
           @rp_session_endpoint = rp_session_endpoint || OCI::Regions.get_service_endpoint(@region, :Auth)

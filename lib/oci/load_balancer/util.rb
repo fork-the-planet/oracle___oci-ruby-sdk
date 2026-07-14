@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 module OCI
@@ -10,6 +10,7 @@ module OCI
       # max_interval_seconds between requests.
       #
       # @param [LoadBalancerClient] client A load balancer client
+      # @param [String] work_request_id The work request identifier
       # @param [Integer] max_interval_seconds The maximum interval between queries, in seconds.
       # @param [Integer] max_wait_seconds The maximum total time to wait, in seconds.
       # @param [Boolean] raise_error_on_failure If true, then a WorkRequestFailedError will be

@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 require 'pp'
@@ -86,10 +86,16 @@ module OCI
     # @param [String] endpoint_template A service endpoint template defined by service team in spec.
     #
     # @return [String] A fully qualified endpoint
-    def self.get_service_endpoint_for_template(region, endpoint_template)
+    def self.get_service_endpoint_for_template(region, endpoint_template, endpoint_service_name = nil)
       # check if the region exists in config file, environment variable or region meta_data_service
       # and add it to the existing map of regions.
       check_and_add_region_metadata(region)
+
+      if dotted_region?(region)
+        service_name = endpoint_service_name || extract_service_name_from_template(endpoint_template)
+        return "https://#{service_name}.#{region}" if service_name
+      end
+
       endpoint = endpoint_template.clone
 
       # replace the token inside service_endpoint_template if exists
@@ -107,8 +113,48 @@ module OCI
     end
 
     def self.format_endpoint(prefix, region)
+      return "https://#{prefix}.#{region}" if dotted_region?(region)
+
       second_level_domain = get_second_level_domain(region)
       "https://#{prefix}.#{region}.#{second_level_domain}"
+    end
+
+    def self.dotted_region?(region)
+      region.include?('.')
+    end
+
+    # For dotted regions, treat the region value as the domain suffix and derive the
+    # service name from the template when one was not passed explicitly.
+    #
+    # This method extracts the first real host label from an endpoint template such as
+    # "https://identity.{region}.oci.{secondLevelDomain}" and returns "identity".
+    # It also handles templates that start with one or more placeholders, for example
+    # "{dualStack?ds.}identity.{region}.oci.{secondLevelDomain}".
+    def self.extract_service_name_from_template(endpoint_template)
+      return nil unless endpoint_template.include?('{region}')
+
+      # Remove a leading "https://" from the start of the template.
+      host = endpoint_template.sub(/\Ahttps:\/\//, '')
+      # Remove everything from the first "/" through the end of the string.
+      host = host.sub(/\/.*\z/, '')
+
+      loop do
+        # Strip leading placeholders until the host begins with a real hostname label.
+        # /\A\{[^}]+\}/ removes one leading "{...}" placeholder from the start of the host.
+        stripped_host = host.sub(/\A\{[^}]+\}/, '')
+        # /\A\./ removes one leading "." left behind after stripping a placeholder.
+        stripped_host = stripped_host.sub(/\A\./, '')
+
+        # break out of the loop if nothing changed anymore
+        break if stripped_host == host
+
+        host = stripped_host
+      end
+
+      service_name = host.split('.').first
+      return nil if service_name.nil? || service_name.empty?
+
+      service_name
     end
 
     # Returns a second level domain for the given region.
@@ -191,7 +237,7 @@ module OCI
 
       region_info = {}
       begin
-        url = OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner::GET_REGION_INFO_URL
+        url = OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner.region_info_url
         uri_region_info = URI(url)
         region_info_client = Net::HTTP.new(uri_region_info.hostname, uri_region_info.port)
         # region_info_client.max_retries = 0

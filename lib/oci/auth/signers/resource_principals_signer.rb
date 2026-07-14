@@ -1,4 +1,4 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 require 'oci/base_signer'
@@ -22,6 +22,16 @@ module OCI
       OCI_KUBERNETES_PROXYMUX_SERVICE_PORT = '12250'.freeze
       KUBERNETES_SERVICE_HOST = 'KUBERNETES_SERVICE_HOST'.freeze
 
+      OCI_RESOURCE_PRINCIPAL_RESOURCE_ID_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_RESOURCE_ID'.freeze
+      OCI_RESOURCE_PRINCIPAL_TENANCY_ID_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_TENANCY_ID'.freeze
+      OCI_RESOURCE_PRINCIPAL_SECURITY_CONTEXT_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_SECURITY_CONTEXT'.freeze
+      OCI_RESOURCE_PRINCIPAL_RPT_PATH_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_RPT_PATH'.freeze
+      OCI_RESOURCE_PRINCIPAL_RPT_ENDPOINT_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_RPT_ENDPOINT'.freeze
+      OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT'.freeze
+      OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM'.freeze
+      OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_PASSPHRASE_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_PASSPHRASE'.freeze
+      OCI_RESOURCE_PRINCIPAL_REGION_FOR_LEAF_RESOURCE = 'OCI_RESOURCE_PRINCIPAL_REGION'.freeze
+
       def self.resource_principals_signer(resource_principal_token_path_provider: nil)
         rp_version = ENV[OCI_RESOURCE_PRINCIPAL_VERSION]
         if rp_version == '2.2'
@@ -34,6 +44,28 @@ module OCI
             private_key: private_key,
             private_key_passphrase: private_key_passphrase,
             region: region
+          )
+        elsif %w[2.1 2.1.1 2.1.2].include?(rp_version)
+          resource_principal_token_endpoint_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_RPT_ENDPOINT_FOR_LEAF_RESOURCE]
+          resource_principal_session_token_endpoint_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT_FOR_LEAF_RESOURCE]
+          resource_id_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_RESOURCE_ID_FOR_LEAF_RESOURCE]
+          tenancy_id_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_TENANCY_ID_FOR_LEAF_RESOURCE]
+          private_key_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_FOR_LEAF_RESOURCE]
+          private_key_passphrase_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_PASSPHRASE_FOR_LEAF_RESOURCE]
+          region_for_leaf_resource = ENV[OCI_RESOURCE_PRINCIPAL_REGION_FOR_LEAF_RESOURCE]
+          security_context = ENV[OCI_RESOURCE_PRINCIPAL_SECURITY_CONTEXT_FOR_LEAF_RESOURCE]
+          resource_principal_token_path = ENV[OCI_RESOURCE_PRINCIPAL_RPT_PATH_FOR_LEAF_RESOURCE]
+          OCI::Auth::Signers::EphemeralResourcePrincipalV21Signer.new(
+            resource_principal_token_endpoint: resource_principal_token_endpoint_for_leaf_resource,
+            resource_principal_session_token_endpoint: resource_principal_session_token_endpoint_for_leaf_resource,
+            resource_id: resource_id_for_leaf_resource,
+            tenancy_id: tenancy_id_for_leaf_resource,
+            private_key: private_key_for_leaf_resource,
+            private_key_passphrase: private_key_passphrase_for_leaf_resource,
+            security_context: security_context,
+            rp_version: rp_version,
+            region: region_for_leaf_resource,
+            resource_principal_token_path: resource_principal_token_path
           )
         elsif rp_version == '1.1'
           #

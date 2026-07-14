@@ -1,9 +1,9 @@
-# Copyright (c) 2016, 2025, Oracle and/or its affiliates.  All rights reserved.
+# Copyright (c) 2016, 2026, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 require 'oci'
 
-# By default this will hit the auth service in the region returned by http://169.254.169.254/opc/v1/instance/region on the instance. To customize
+# By default this will hit the auth service in the region returned by http://169.254.169.254/opc/v2/instance/region on the instance. To customize
 # which auth service endpoint gets hit (e.g. in R1), you can provide an explicit federation_endpoint when creating the object. For example:
 #
 #   OCI::Auth::Signers::InstancePrincipalsSecurityTokenSigner.new(federation_endpoint: "my endpoint")
